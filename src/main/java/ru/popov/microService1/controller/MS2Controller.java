@@ -68,7 +68,6 @@ public class MS2Controller {
         }
         //save to cash number of sessions
         sessionCash.saveEventCash("sessionId", sessionId);
-        session.close();
     }
 
     @GetMapping("/stop")
