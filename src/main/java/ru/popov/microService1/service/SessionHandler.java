@@ -46,7 +46,7 @@ public class SessionHandler implements WebSocketHandler {
         Date timeWork = new Date(endDate.getTime() - startDate.getTime());
         long time = timeWork.getTime()/1000;
         //view console all parameters with task
-        System.out.println("Disconnected" + "Время взаимодействия: " + time +
+        System.out.println("Disconnected! " + "Время взаимодействия: " + time +
                 "сек. " + "Кол-во сообщений: " + sessionCash.getSessionCash().get("sessionId"));
     }
 

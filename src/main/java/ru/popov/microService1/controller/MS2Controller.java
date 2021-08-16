@@ -45,13 +45,14 @@ public class MS2Controller {
         Message message = null;
 
         long sessionId = 1;
+        sessionCash.saveEventCash("sessionId", sessionId);
 
         WebSocketClient client = new StandardWebSocketClient();
         //set connection
         session = client.doHandshake(sessionHandler, ms1Config.getMS2Url()).get();
 
 
-        while ((new Date().getTime() - date.getTime()) < period) {
+        while (true) {
             message = new Message();
             message.setSessionId(sessionId);
             ++sessionId;
@@ -65,9 +66,16 @@ public class MS2Controller {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            if (sessionCash.getSessionCash().get("sessionId") < sessionId) {
+                sessionCash.saveEventCash("sessionId", sessionId);
+            }
+            if ((new Date().getTime() - date.getTime()) >= period) {
+                session.close();
+                break;
+            }
         }
         //save to cash number of sessions
-        sessionCash.saveEventCash("sessionId", sessionId);
+        //sessionCash.saveEventCash("sessionId", sessionId);
     }
 
     @GetMapping("/stop")
